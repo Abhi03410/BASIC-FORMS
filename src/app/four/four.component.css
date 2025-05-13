@@ -1,0 +1,13 @@
+.ng-invalid .ng-touched{
+    border-color: red;
+}
+.pending-state{
+    position: absolute;
+    bottom: 2px;
+    top: 35px;
+    left:900px;
+}
+.pending-state img{
+    color:orangered;
+    width: 20px;
+}

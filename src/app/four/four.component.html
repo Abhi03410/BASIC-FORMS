@@ -1,0 +1,20 @@
+<p>four works!</p>
+<form [formGroup]="myReactForm" (submit)="onSubmit()">
+    <div class="form-group position-relative">
+        <label for="em">Email Address</label>
+        <input type="text" class="form-control form-control-sm" id="em" name="emailAddress"
+            formControlName="emailId">
+            <span class="pending-state font-weight-light" *ngIf="myReactForm.get('emailId')?.pending">We are Fetching the data...
+                <img src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif" alt="">
+            </span>
+        <span class="small text-danger" *ngIf="myReactForm.get('emailId').touched && !myReactForm.get('emailId').valid">
+            <ng-container *ngIf="myReactForm.get('emailId').errors?.required">*email Id is Required</ng-container>
+            <ng-container *ngIf="myReactForm.get('emailId').errors?.uniqueEmail">*This is already used. please use other email Id</ng-container>
+        </span>
+    </div>
+    <button type="submit" class="btn btn-primary btn-sm">submit</button>
+</form>
+
+
+
+<!-- errors:required -->

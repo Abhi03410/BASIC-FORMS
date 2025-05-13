@@ -1,0 +1,104 @@
+<h2 class="my-2">Reactive Forms</h2>
+<div class="row">
+    <div class="col-sm-6">
+        <form [formGroup]="myReactiveForm" (submit)="onSubmit()">
+            <div class="form-group">
+                <label for="fn">First Name</label>
+                <input type="text" name="firstName" id="fn" class="form-control form-control-sm"
+                    formControlName="firstName">
+                <span class="small text-danger"
+                    *ngIf="myReactiveForm.get('firstName').touched && !myReactiveForm.get('firstName').valid">*First
+                    Name Is Required</span>
+            </div>
+            <div class="form-group">
+                <label for="ln">Last Name</label>
+                <input type="text" name="lastName" id="ln" class="form-control form-control-sm"
+                    formControlName="lastName">
+                <span class="small text-danger"
+                    *ngIf="myReactiveForm.get('lastName').touched && !myReactiveForm.get('lastName').valid">*Last Name Is
+                    Required</span>
+            </div>
+            <div formGroupName="userContactDetails">
+                <div class="form-group">
+                    <label for="cn">Contact Number</label>
+                    <input type="text" name="ContactNumber" id="cn" class="form-control form-control-sm"
+                        formControlName="contactNumber">
+                    <span class="small text-danger"
+                        *ngIf="myReactiveForm.get('userContactDetails.contactNumber').touched &&!myReactiveForm.get('userContactDetails.contactNumber').valid">
+                        <ng-container *ngIf="myReactiveForm.get('userContactDetails.contactNumber').errors.required">*Contact Number is Required!</ng-container>
+                        <ng-container *ngIf="myReactiveForm.get('userContactDetails.contactNumber').errors.minlength">Contact Number Should be at Least
+                                10 Digits Long! You have entered {{myReactiveForm.get('userContactDetails.contactNumber')?.errors?.minlength.actualLength}}
+                                digits and still have to enter {{myReactiveForm.get('userContactDetails.contactNumber')?.errors?.minlength.requiredLength - myReactiveForm.get('userContactDetails.contactNumber').errors.minlength.actualLength}} more digits to make it valid
+                            </ng-container>
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label for="em">Email Address</label>
+                    <input type="text" name="emailId" id="em" class="form-control form-control-sm"
+                        formControlName="emailId">
+                    <span class="small text-danger"
+                        *ngIf="myReactiveForm.get('userContactDetails.emailId').touched &&!myReactiveForm.get('userContactDetails.emailId').valid">*Email Address
+                        Is Required</span>
+                </div>
+            </div>
+            <!-- Array -->
+            <!-- <div formArrayName="knownLanguages">
+                <label>Known Languages</label>
+                <input type="text" class="form-control form-control-sm" formControlName="0"> 
+                <div class="input-group mb-3" *ngFor="let lang of myReactiveForm.get('knownLanguages').controls; let i = index">
+                    <input type="text" class="form-control form-control-sm" [formControlName]="i">
+                     <div class="input-group-append" *ngIf="myReactiveForm.get('knownLanguages').controls.length"> 
+                    <div class="input-group-append" *ngIf="myReactiveForm.get('knownLanguages').controls.length-1 === i">
+                      <button class="btn btn-outline-primary btn-sm" type="button" (click)="addNewLanguageControl()">Add Language</button>
+                    </div>
+                </div>
+            </div> -->
+
+            <!--Array [{object}]-->
+            <div formArrayName="knownLanguages">
+                <label>Known Languages</label>
+                <div *ngFor="let langGrp of myReactiveForm.get('knownLanguages').controls; let i = index" formGroupName="0">
+                    <div class="row mb-2">
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control form-control-sm" name="lang" placeholder="Language Name..." formControlName="language">
+                        </div>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control form-control-sm" name="tBy" placeholder="Taught By..." formControlName="taughtBy">
+                        </div>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control form-control-sm" name="mOfExp" placeholder="Months Of Experience..." formControlName="monthsOfExp">
+                        </div>
+                        <div class="col-sm-3" *ngIf="myReactiveForm.get('knownLanguages').controls.length-1 === i">
+                            <button class="btn btn-secondary btn-sm" (click)="aadNewLanguageGroup()">Add Language</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-primary btn-sm mr-2" type="submit">Submit</button>
+            <button class="btn btn-danger btn-sm">Cancel</button>
+            <button class="btn btn-secondary btn-sm"type="button" (click)="setDefaultValue()">Set Default Value</button>
+            <button class="btn btn-secondary btn-sm" type="button" (click)="setSpecificDefaultValue()">Set Specific Default Value</button>
+        </form>
+    </div>
+</div>
+
+<!-- Array -->
+<!-- var arr = ['html','css','js','bootstrap','typescript','angular17'] -->
+
+<!-- Array [{object}] -->
+<!-- {
+    "firstName": "Manoj",
+    "lastName": "Patil",
+    "userContactDetails": {
+        "contactNumber": "09730530165",
+        "emailId": "manoj.patil.144@gmail.com",
+    },
+*** knownLanguages : [
+        { language : 'HTML', taughtBy : 'Prashant B.',yearsOfExp : '7 months' },
+        { language : 'CSS', taughtBy : 'Prashant B.',monthsOfExp : '5 months' },
+        { lang : 'JS', taughtBy : 'Devendra B.',yearsOfExp : '3 months' },
+        { language : 'Typescript', taughtBy : 'Manoj Patil',monthsOfExp : '2 months' },
+        { lang : 'Angular', taughtBy : 'Manoj Patil',monthsOfExp : '4.5 months' }
+    ],
+} -->

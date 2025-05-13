@@ -1,0 +1,4 @@
+.ng-invalid .ng-touched,
+.ng-submitted .ng-invalid {
+    border-color: red;
+}
