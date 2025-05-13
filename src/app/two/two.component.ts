@@ -67,4 +67,8 @@ export class TwoComponent implements OnInit {
   getData(){
     console.log(this.myReactiveForm.value);
   }
+
+  newAdd(){
+    this.myReactiveForm.get('knowLanguages').push(new FormControl(''))
+  }
 }
