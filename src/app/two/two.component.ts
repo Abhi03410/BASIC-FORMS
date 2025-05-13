@@ -63,4 +63,8 @@ export class TwoComponent implements OnInit {
       }
     })
   }
+
+  getData(){
+    console.log(this.myReactiveForm.value);
+  }
 }
